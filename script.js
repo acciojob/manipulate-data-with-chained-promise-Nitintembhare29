@@ -1,26 +1,33 @@
 //your JS code here. If required.
-function manipulateArray() {
+function processNumbers(numbers) {
   return new Promise((resolve) => {
     setTimeout(() => {
-      resolve([1, 2, 3, 4]);
+      resolve(numbers);
     }, 3000);
   })
-  .then((arr) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const filteredArr = arr.filter((num) => num % 2 === 0);
-        document.querySelector('#output').textContent = filteredArr;
-        resolve(filteredArr);
-      }, 1000);
+    .then((numbers) => {
+      const filteredNumbers = numbers.filter((number) => number % 2 === 0);
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(filteredNumbers);
+        }, 1000);
+      });
+    })
+    .then((filteredNumbers) => {
+      const multipliedNumbers = filteredNumbers.map((number) =>
+        number * 2
+      );
+      return new Promise((resolve) => {
+        setTimeout(() => {
+          resolve(multipliedNumbers);
+        }, 2000);
+      });
     });
-  })
-  .then((arr) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        const multipliedArr = arr.map((num) => num * 2);
-        document.querySelector('#output').textContent = multipliedArr;
-        resolve(multipliedArr);
-      }, 2000);
-    });
-  });
 }
+
+const outputElement = document.querySelector("#output");
+
+processNumbers([1, 2, 3, 4]).then((result) => {
+  outputElement.textContent = result;
+});
+
